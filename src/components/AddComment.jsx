@@ -1,37 +1,26 @@
-import React, { Component } from 'react'
+import { Component } from 'react'
 import { Button, Form } from 'react-bootstrap'
 
 class AddComment extends Component {
   state = {
-    comment: {
+    comments: {
       comment: '',
-      elementId: '',
-      rate: '',
+      rate: 1,
+      elementId: this.props.bookId,
     },
   }
 
-  handleInputChange = (property, value) => {
-    this.setState({
-      comment: {
-        ...this.state.comment,
-        [property]: value,
+  addComment = (e) => {
+    e.preventDefault()
+    fetch('https://striveschool-api.herokuapp.com/api/comments/', {
+      method: 'POST',
+      body: JSON.stringify(this.state.comments),
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization:
+          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhNWUzMmY2ZTNkZDAwMTQ5NWU0NDgiLCJpYXQiOjE2OTgzMjQwMTgsImV4cCI6MTY5OTUzMzYxOH0.Ce_pmGglJCcINuLb6Szk4tjGViYOqlj3EEoQn2xVgDg',
       },
     })
-  }
-
-  addComment = () => {
-    fetch(
-      'https://striveschool-api.herokuapp.com/api/comments/' + this.props.pippo,
-      {
-        method: 'POST',
-        body: JSON.stringify(this.state.comment),
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NTNhNWUzMmY2ZTNkZDAwMTQ5NWU0NDgiLCJpYXQiOjE2OTgzMjQwMTgsImV4cCI6MTY5OTUzMzYxOH0.Ce_pmGglJCcINuLb6Szk4tjGViYOqlj3EEoQn2xVgDg',
-        },
-      }
-    )
       .then((res) => {
         if (res.ok) {
           return res.json()
@@ -42,10 +31,10 @@ class AddComment extends Component {
       .then((data) => {
         console.log(data)
         this.setState({
-          comment: {
+          comments: {
             comment: '',
-            elementId: this.props.pippo,
             rate: 1,
+            elementId: this.props.bookId,
           },
         })
       })
@@ -53,29 +42,36 @@ class AddComment extends Component {
         console.log('ERRORE', err)
       })
   }
-  componentDidMount() {
-    this.addComment()
-  }
 
   render() {
     return (
-      <Form>
-        <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+      <Form onSubmit={this.addComment}>
+        <Form.Group className="mb-3">
           <Form.Label>Lascia il tuo commento</Form.Label>
           <Form.Control
             as="textarea"
             rows={2}
-            value={this.state.comment.comment}
+            value={this.state.comments.comment}
             onChange={(e) => {
-              this.handleInputChange('comment', e.target.value)
+              this.setState({
+                comments: {
+                  ...this.state.comments,
+                  comment: e.target.value,
+                },
+              })
             }}
           />
         </Form.Group>
         <Form.Select
           aria-label="Voto"
-          value={this.state.comment.rate}
+          value={this.state.comments.rate}
           onChange={(e) => {
-            this.handleInputChange('rate', e.target.value)
+            this.setState({
+              comments: {
+                ...this.state.comments,
+                rate: e.target.value,
+              },
+            })
           }}
         >
           <option>Dai un voto al libro</option>

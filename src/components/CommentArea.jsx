@@ -42,7 +42,7 @@ class CommentArea extends Component {
     return (
       <>
         <CommentList comments={this.state.comment} />
-        <AddComment />
+        <AddComment bookId={this.props.pippo} />
       </>
     )
   }
