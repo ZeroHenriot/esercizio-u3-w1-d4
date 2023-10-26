@@ -8,15 +8,12 @@ class SingleBook extends Component {
     return (
       <>
         <Col md={3} className="py-2">
-          <Card
-            className="h-100"
-            onClick={() => this.setState({ selected: !this.state.selected })}
-            border={this.state.selected ? 'success' : ''}
-          >
+          <Card className="h-100" border={this.state.selected ? 'success' : ''}>
             <Card.Img
               variant="top"
               className="h-75"
               src={this.props.book.img}
+              onClick={() => this.setState({ selected: !this.state.selected })}
             ></Card.Img>
             <Card.Body className="d-flex flex-column justify-content-between">
               <Card.Title className="text-nowrap text-truncate">

@@ -18,7 +18,7 @@ function App() {
       <MyNavbar />
       <Welcome welcomeMessage="Ciao, benvenuto nel mio shop" />
       {/* <AllTheBooks /> */}
-      <BookList books={history} />
+      <BookList books={fantasy} />
       <Footer />
     </div>
   )
