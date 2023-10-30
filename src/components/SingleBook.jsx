@@ -3,17 +3,19 @@ import { Card, Col } from 'react-bootstrap'
 import CommentArea from './CommentArea'
 
 class SingleBook extends Component {
-  state = { selected: false }
+  state = { asin: '' }
+  checkSelected = (value) => (value = this.props.selected ? 'seleceted' : '')
   render() {
     return (
       <>
+        {/* {console.log(this.props.book.asin)} */}
         <Col md={3} className="py-2">
-          <Card className="h-100" border={this.state.selected ? 'success' : ''}>
+          <Card className="h-100" border={this.props.selected ? 'success' : ''}>
             <Card.Img
               variant="top"
               className="h-75"
               src={this.props.book.img}
-              onClick={() => this.setState({ selected: !this.state.selected })}
+              onClick={() => this.props.selected}
             ></Card.Img>
             <Card.Body className="d-flex flex-column justify-content-between">
               <Card.Title className="text-nowrap text-truncate">
@@ -21,9 +23,7 @@ class SingleBook extends Component {
               </Card.Title>
               <Card.Text>{this.props.book.price} €</Card.Text>
             </Card.Body>
-            {this.state.selected && (
-              <CommentArea pippo={this.props.book.asin} />
-            )}
+            {this.props.selected && <CommentArea pippo={this.state.asin} />}
           </Card>
         </Col>
       </>

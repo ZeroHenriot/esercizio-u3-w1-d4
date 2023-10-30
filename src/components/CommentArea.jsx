@@ -1,10 +1,14 @@
 import { Component } from 'react'
 import CommentList from './CommentList'
 import AddComment from './AddComment'
+import { Alert, Spinner } from 'react-bootstrap'
 
 class CommentArea extends Component {
   state = {
     comment: [],
+    isLoading: true,
+    isError: false,
+    isBlocked: false,
   }
   getComments = () => {
     fetch(
@@ -25,13 +29,27 @@ class CommentArea extends Component {
       })
       .then((data) => {
         console.log(data)
+        // console.log(data)
         this.setState({
           comment: data,
+          isLoading: false,
         })
       })
       .catch((err) => {
         console.log('ERRORE', err)
+        // console.log(this.props)
+        this.setState({
+          isLoading: false,
+          isError: true,
+          isBlocked: true,
+        })
       })
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.pippo !== this.props.pippo) {
+      this.getComments()
+    }
   }
 
   componentDidMount() {
@@ -41,7 +59,17 @@ class CommentArea extends Component {
   render() {
     return (
       <>
-        <CommentList comments={this.state.comment} />
+        {this.state.isLoading && (
+          <div className="text-center">
+            <Spinner animation="grow" variant="warning" />
+          </div>
+        )}
+        {this.state.isError && (
+          <div className="text-center px-2">
+            <Alert variant="danger">Bravo, mo risolvi i tuoi bug</Alert>
+          </div>
+        )}
+        <CommentList refresh={this.getComments} />
         <AddComment bookId={this.props.pippo} />
       </>
     )

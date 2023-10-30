@@ -46,42 +46,46 @@ class AddComment extends Component {
   render() {
     return (
       <Form onSubmit={this.addComment}>
-        <Form.Group className="mb-3">
-          <Form.Label>Lascia il tuo commento</Form.Label>
-          <Form.Control
-            as="textarea"
-            rows={2}
-            value={this.state.comments.comment}
+        <div className="px-2">
+          <Form.Group className="mb-3">
+            <Form.Label>Lascia il tuo commento</Form.Label>
+            <Form.Control
+              as="textarea"
+              rows={2}
+              value={this.state.comments.comment}
+              onChange={(e) => {
+                this.setState({
+                  comments: {
+                    ...this.state.comments,
+                    comment: e.target.value,
+                  },
+                })
+              }}
+            />
+          </Form.Group>
+          <Form.Select
+            aria-label="Voto"
+            value={this.state.comments.rate}
             onChange={(e) => {
               this.setState({
                 comments: {
                   ...this.state.comments,
-                  comment: e.target.value,
+                  rate: e.target.value,
                 },
               })
             }}
-          />
-        </Form.Group>
-        <Form.Select
-          aria-label="Voto"
-          value={this.state.comments.rate}
-          onChange={(e) => {
-            this.setState({
-              comments: {
-                ...this.state.comments,
-                rate: e.target.value,
-              },
-            })
-          }}
-        >
-          <option>Dai un voto al libro</option>
-          <option value="1">1</option>
-          <option value="2">2</option>
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="5">5</option>
-        </Form.Select>
-        <Button type="submit">Vota</Button>
+          >
+            <option>Dai un voto al libro</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </Form.Select>
+          <Button type="submit" className="w-100 my-2">
+            Vota
+          </Button>
+        </div>
       </Form>
     )
   }

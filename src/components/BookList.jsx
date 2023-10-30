@@ -1,11 +1,13 @@
 import { Component } from 'react'
-import { Container, Row, Form } from 'react-bootstrap'
+import { Container, Row, Form, Col } from 'react-bootstrap'
 
 import SingleBook from './SingleBook'
+import CommentArea from './CommentArea'
 
 class BookList extends Component {
   state = {
     searchValue: '',
+    selected: false,
   }
   render() {
     return (
@@ -24,16 +26,27 @@ class BookList extends Component {
             />
           </Form.Group>
           <Row>
-            {this.props.books
-              .filter((book) =>
-                book.title
-                  .toLowerCase()
-                  .toUpperCase()
-                  .includes(this.state.searchValue)
-              )
-              .map((book) => (
-                <SingleBook book={book} key={book.asin} />
-              ))}
+            <Col className="col-9">
+              <Row>
+                {this.props.books
+                  .filter((book) =>
+                    book.title
+                      .toLowerCase()
+                      .toUpperCase()
+                      .includes(this.state.searchValue)
+                  )
+                  .map((book) => (
+                    <SingleBook
+                      book={book}
+                      key={book.asin}
+                      selected={this.state.selected}
+                    />
+                  ))}
+              </Row>
+            </Col>
+            <Col>
+              <CommentArea />
+            </Col>
           </Row>
         </Container>
       </>

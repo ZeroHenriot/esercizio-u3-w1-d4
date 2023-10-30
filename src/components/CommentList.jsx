@@ -5,11 +5,20 @@ import SingleComment from './SingleComment'
 class CommentList extends Component {
   render() {
     return (
-      <ListGroup>
-        {this.props.comments.map((comment) => {
-          return <SingleComment key={comment._id} comment={comment} />
-        })}
-      </ListGroup>
+      <div className="px-2">
+        <ListGroup>
+          {/* {this.props.comments.map((comment) => {
+            return (
+              <SingleComment
+                key={comment._id}
+                comment={comment}
+                id={comment._id}
+                refresh={this.props.refresh}
+              />
+            )
+          })} */}
+        </ListGroup>
+      </div>
     )
   }
 }
