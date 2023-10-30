@@ -8,7 +8,16 @@ class BookList extends Component {
   state = {
     searchValue: '',
     selected: false,
+    asin: '',
   }
+
+  checkSelected = (value, asin) => {
+    this.setState({
+      selected: value,
+      asin: asin,
+    })
+  }
+
   render() {
     return (
       <>
@@ -39,13 +48,15 @@ class BookList extends Component {
                     <SingleBook
                       book={book}
                       key={book.asin}
-                      selected={this.state.selected}
+                      selected={this.checkSelected}
+                      selectedState={this.state.selected}
+                      isSelected={this.state.asin === book.asin}
                     />
                   ))}
               </Row>
             </Col>
             <Col>
-              <CommentArea />
+              {this.state.selected && <CommentArea pippo={this.state.asin} />}
             </Col>
           </Row>
         </Container>

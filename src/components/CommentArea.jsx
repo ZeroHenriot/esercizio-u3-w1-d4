@@ -69,7 +69,7 @@ class CommentArea extends Component {
             <Alert variant="danger">Bravo, mo risolvi i tuoi bug</Alert>
           </div>
         )}
-        <CommentList refresh={this.getComments} />
+        <CommentList refresh={this.getComments} comments={this.state.comment} />
         <AddComment bookId={this.props.pippo} />
       </>
     )
