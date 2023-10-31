@@ -113,7 +113,7 @@ const BookList = (props) => {
                     key={book.asin}
                     selected={checkSelected}
                     selectedState={selected}
-                    isSelected={asin === book.asin}
+                    isSelected={asin.asin === book.asin}
                   />
                 ))}
             </Row>
