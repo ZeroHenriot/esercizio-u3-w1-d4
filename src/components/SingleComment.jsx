@@ -50,14 +50,14 @@ import { Trash3Fill } from 'react-bootstrap-icons'
 const SingleComment = (props) => {
   return (
     <ListGroupItem>
-      <Row className="justify-content-between">
-        <Col sm={6}>
+      <Row>
+        <Col xl={8}>
           <p> {props.comment.comment}</p>
         </Col>
-        <Col>
+        <Col xs={6} xl={2} className="p-xl-0">
           <p>{props.comment.rate} / 5</p>
         </Col>
-        <Col className="text-end">
+        <Col xs={6} xl={2} className="text-end">
           <Trash3Fill
             style={{ cursor: 'pointer' }}
             onClick={() => {

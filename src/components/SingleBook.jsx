@@ -44,11 +44,8 @@ const SingleBook = (props) => {
   return (
     <>
       {/* {console.log(props.book.asin)} */}
-      <Col md={3} className="py-2">
-        <Card
-          className="h-100"
-          border={props.isSelected && props.selectedState ? 'success' : ''}
-        >
+      <Col md={5} lg={3} className="py-2">
+        <Card className="h-100" border={props.isSelected ? 'success' : ''}>
           <Card.Img
             variant="top"
             className="h-75"

@@ -129,24 +129,30 @@ const CommentArea = (props) => {
   }
 
   useEffect(() => {
-    getComments()
+    if (props.pippo) {
+      getComments()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.pippo])
 
   return (
     <>
-      {isLoading && (
-        <div className="text-center">
-          <Spinner animation="grow" variant="warning" />
+      {props.pippo && (
+        <div className="sticky-top">
+          {isLoading && (
+            <div className="text-center">
+              <Spinner animation="grow" variant="warning" />
+            </div>
+          )}
+          {isError && (
+            <div className="text-center px-2">
+              <Alert variant="danger">Bravo, mo risolvi i tuoi bug</Alert>
+            </div>
+          )}
+          <CommentList refresh={getComments} comments={comment} />
+          <AddComment bookId={props.pippo} />
         </div>
       )}
-      {isError && (
-        <div className="text-center px-2">
-          <Alert variant="danger">Bravo, mo risolvi i tuoi bug</Alert>
-        </div>
-      )}
-      <CommentList refresh={getComments} comments={comment} />
-      <AddComment bookId={props.pippo} />
     </>
   )
 }

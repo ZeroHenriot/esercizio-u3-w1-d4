@@ -73,16 +73,16 @@ const BookList = (props) => {
   // }
 
   const [searchValue, setSearchValue] = useState('')
-  const [selected, setSelected] = useState(false)
+
   const [asin, setAsin] = useState('')
 
-  const checkSelected = (value, asin) => {
+  const checkSelected = (value, newAsin) => {
     // this.setState({
     //   selected: value,
     //   asin: asin,
     // })
-    setSelected({ selected: value })
-    setAsin({ asin: asin })
+
+    setAsin(newAsin)
   }
   // console.log(asin.asin)
   return (
@@ -94,31 +94,28 @@ const BookList = (props) => {
             placeholder="cerca un libro"
             // value={selected}
             onChange={(e) => {
-              setSearchValue({
-                searchValue: e.target.value,
-              })
+              setSearchValue(e.target.value)
             }}
           />
         </Form.Group>
         <Row>
-          <Col className="col-9">
-            <Row>
+          <Col xs={6} md={8} lg={9}>
+            <Row className="justify-content-center">
               {props.books
                 .filter((book) =>
-                  book.title.toLowerCase().toUpperCase().includes(searchValue)
+                  book.title.toLowerCase().includes(searchValue.toLowerCase())
                 )
-                .map((book) => (
+                .map((book, index) => (
                   <SingleBook
                     book={book}
-                    key={book.asin}
+                    key={index}
                     selected={checkSelected}
-                    selectedState={selected}
-                    isSelected={asin.asin === book.asin}
+                    isSelected={asin === book.asin}
                   />
                 ))}
             </Row>
           </Col>
-          <Col>{selected && <CommentArea pippo={asin.asin} />}</Col>
+          <Col>{<CommentArea pippo={asin} />}</Col>
         </Row>
       </Container>
     </>
